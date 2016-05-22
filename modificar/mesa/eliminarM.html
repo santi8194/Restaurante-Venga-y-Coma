@@ -1,0 +1,55 @@
+<html>
+<head>
+	<title>Eliminar Mesa</title>
+</head>
+<body>
+
+			<?php
+			require("../../conexion.php");
+			?>	
+			<form action="eliminarMesa.php" method="POST">
+				<br><br><br>
+				<b>ID:</b>
+				<select name="id" required>
+				<?php
+				$query = "SELECT DISTINCT(id) AS id FROM mesa";
+				$result = mysqli_query($conexion, $query);
+				if($result){
+					while($row = $result->fetch_array()){
+						$id = $row["id"];
+					?>
+			  			<option value="<?php echo $id; ?>"><?php echo $id; ?></option>
+			  		<?php
+			  		}
+				} else{
+					echo "No hay Mesas en la base de datos.";
+				}
+		  		?>
+				</select><br><br>
+				<b>Restaurante:</b>
+				<select name="restaurante" required>
+				<?php
+				$query = "SELECT DISTINCT(restaurante) AS restaurante FROM mesa";
+				$result = mysqli_query($conexion, $query);
+				if($result){
+					while($row = $result->fetch_array()){
+						$restaurante = $row["restaurante"];
+					?>
+			  			<option value="<?php echo $restaurante; ?>"><?php echo $restaurante; ?></option>
+			  		<?php
+			  		}
+				} else{
+					echo "No hay Mesas en la base de datos.";
+				}
+		  		?>
+				</select><br><br>
+				<input type="submit" value="Eliminar">
+			</form>
+			<?php
+			?>
+		<br>
+		<a href="index.php">volver a modificar Mesa</a>
+		<br>
+		<a href="../../index.php">volver a inicio</a>
+</body>
+</html>

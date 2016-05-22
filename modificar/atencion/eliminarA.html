@@ -1,0 +1,87 @@
+<html>
+<head>
+	<title>Eliminar Atención</title>
+</head>
+<body>
+
+			<?php
+			require("../../conexion.php");
+			?>	
+				<form action="eliminarAtencion.php" method="POST">
+					<br><br><br>
+					<b>Fecha:</b>
+					<select name="fecha">
+					<?php
+					$query = "SELECT DISTINCT(fecha) AS fecha FROM atencion";
+					$result = mysqli_query($conexion, $query);
+					if($result){
+						while($row = $result->fetch_array()){
+							$fecha = $row["fecha"];
+						?>
+				  			<option value="<?php echo $fecha; ?>"><?php echo $fecha; ?></option>
+				  		<?php
+				  		}
+					} else{
+						echo "No hay fechas en la base de datos.";
+					}
+			  		?>
+					</select><br><br>
+					<b>Hora:</b>
+					<select name="hora">
+					<?php
+					$query = "SELECT DISTINCT(hora) AS hora FROM atencion";
+					$result = mysqli_query($conexion, $query);
+					if($result){
+						while($row = $result->fetch_array()){
+							$hora = $row["hora"];
+						?>
+				  			<option value="<?php echo $hora; ?>"><?php echo $hora; ?></option>
+				  		<?php
+				  		}
+					} else{
+						echo "No hay horas en la base de datos.";
+					}
+			  		?>
+					</select><br><br>
+					<b>ID-Mesa:</b>
+					<select name="id_mesa">
+					<?php
+					$query = "SELECT DISTINCT(id_mesa) AS id_mesa FROM atencion";
+					$result = mysqli_query($conexion, $query);
+					if($result){
+						while($row = $result->fetch_array()){
+							$id_mesa = $row["id_mesa"];
+						?>
+				  			<option value="<?php echo $id_mesa; ?>"><?php echo $id_mesa; ?></option>
+				  		<?php
+				  		}
+					} else{
+						echo "No hay mesas en la base de datos.";
+					}
+			  		?>
+					</select><br><br>
+					<b>Restaurante:</b>
+					<select name="restaurante">
+					<?php
+					$query = "SELECT DISTINCT(mesa_rest) AS mesa_rest FROM atencion";
+					$result = mysqli_query($conexion, $query);
+					if($result){
+						while($row = $result->fetch_array()){
+							$restaurante = $row["mesa_rest"];
+						?>
+				  			<option value="<?php echo $restaurante; ?>"><?php echo $restaurante; ?></option>
+				  		<?php
+				  		}
+					} else{
+						echo "No hay restaurantes en la base de datos.";
+					}
+			  		?>
+					</select><br><br>
+					<input type="submit" value="Eliminar">
+				</form>
+		<br>
+		<a href="index.php">volver a modificar Atención</a>
+		<br>
+		<a href="../../index.php">volver a inicio</a>
+</body>
+</html>

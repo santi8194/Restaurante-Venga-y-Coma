@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title>Eliminar Restaurante</title>
+</head>
+<body>
+
+			<?php
+			require("../../conexion.php");
+
+			$query = "SELECT * FROM restaurante";
+
+			$result = mysqli_query($conexion, $query);
+
+			if($result){
+			?>	
+				<form action="eliminarRestaurante.php" method="POST">
+					<br><br><br>
+					<b>Ciudad:</b>
+					<select name="ciudad" required>
+					<?php
+					while($row = $result->fetch_array()){
+						$ciudad = $row["ciudad"];
+					?>
+			  			<option value="<?php echo $ciudad; ?>"><?php echo $ciudad; ?></option>
+			  		<?php
+			  		}
+			  		?>
+					</select><br><br>
+					<input type="submit" value="Eliminar">
+				</form>
+			<?php
+			} else{
+				echo "No hay Restaurantes en la base de datos.";
+			}
+			?>
+		<br>
+		<a href="index.php">volver a modificar Restaurante</a>
+		<br>
+		<a href="../../index.php">volver a inicio</a>
+</body>
+</html>
