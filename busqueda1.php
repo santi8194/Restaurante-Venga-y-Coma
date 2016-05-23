@@ -10,7 +10,8 @@
 
 		$query = "	SELECT *
 					FROM (atencion INNER JOIN mesa ON (atencion.mesa_rest = mesa.restaurante))
-					WHERE atencion.id_mesa = mesa.id";
+					WHERE atencion.id_mesa = mesa.id
+					AND mesa.restaurante = '$ciudad'";
 
 		$result = mysqli_query($conexion, $query);
 
