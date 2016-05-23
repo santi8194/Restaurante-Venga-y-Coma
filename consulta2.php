@@ -7,39 +7,38 @@
 	<?php
 		require("conexion.php");
 
-		$query = "	SELECT *
-					FROM taquillero
-					WHERE id IN (SELECT emisor as id
-				                 FROM factura)
-						AND id NOT IN (SELECT revisor AS id
-				                   FROM factura)";
+		$query = "	SELECT R.*, M.restaurante
+			        FROM restaurante AS R
+			        INNER JOIN mesa AS M ON R.ciudad = M.restaurante 
+				   	GROUP BY R.ciudad
+			        HAVING Count(*)>1 AND Count(*)<5";
 
 		$result = mysqli_query($conexion, $query);
 
 		if($result){
 			?>			
-			<h2>Taquilleros</h2>
+			<h2>Restaurantes</h2>
 
 			<table border='1' width="29%">
 				<tr>
-					<th>ID</th>
-					<th>Nombre</th>
-					<th>Fecha</th>
-					<th>Taquilla</th>
+					<th>Ciudad</th>
+					<th>Dirección</th>
+					<th>Telefono</th>
+					<th>Tamaño</th>
 				</tr>
 
 				<?php
 					while($row = $result->fetch_array()){
-						$id = $row["id"];
-						$nombre = $row["nombre"];
-						$fecha = $row["fecha_contratado"];
-						$taquilla = $row["num_taquilla"];
+						$ciudad = $row["ciudad"];
+						$direccion = $row["direccion"];
+						$telefono = $row["telefono"];
+						$tamano = $row["tamano"];
 				?>
 				<tr>
-					<td><?php echo $id ?></td>
-					<td><?php echo $nombre ?></td>
-					<td><?php echo $fecha ?></td>
-					<td><?php echo $taquilla ?></td>
+					<td><?php echo $ciudad ?></td>
+					<td><?php echo $direccion ?></td>
+					<td><?php echo $telefono ?></td>
+					<td><?php echo $tamano ?></td>
 				</tr>
 				<?php
 					}
@@ -49,7 +48,7 @@
 			</table>
 			<?php
 		} else{
-			echo "No hay personas en la base de datos.";
+			echo "No hay restaurantes en la base de datos.";
 		}
 	?>
 		<br>
