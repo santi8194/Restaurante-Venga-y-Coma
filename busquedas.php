@@ -7,13 +7,30 @@
 		<div style=" background-color: #4cff85;
 				box-shadow: inset 0px -50px 63px -14px rgba(46,194,93,0.75);
 				text-align: center; margin: 0 10px; border-radius: 25px; padding: 1px;">
-			<p>Ingrese la ciudad de un restaurante para ver todos sus mese y a su vez todas las atenciones de cada una de ellas.</p>
+			<p>Ingrese la ciudad de un restaurante para ver todos sus mesas y a su vez todas las atenciones de cada una de ellas.</p>
 			<h2 style="margin: 12px;">1</h2>
 		</div>
 		<div>
 			<form action="busqueda1.php" method="GET">
 				<br><br><br>
-				<b>n:</b><input type="number" name="n" min="1" required><br><br>
+				<b>Ciudad:</b>
+				<select name="ciudad" required>
+				<?php
+				require("conexion.php");
+				$query = "SELECT * FROM restaurante";
+				$result = mysqli_query($conexion, $query);
+				if($result){
+					while($row = $result->fetch_array()){
+						$ciudad = $row["ciudad"];
+					?>
+			  			<option value="<?php echo $ciudad; ?>"><?php echo $ciudad; ?></option>
+			  		<?php
+			  		}
+				} else{
+					echo "No hay Restaurantes en la base de datos.";
+				}
+		  		?>
+				</select><br><br>
 				<input type="submit" value="Buscar">
 			</form>
 		</div>

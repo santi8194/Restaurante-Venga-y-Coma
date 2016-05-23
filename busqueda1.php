@@ -9,45 +9,41 @@
 		extract($_GET);
 
 		$query = "	SELECT *
-					FROM
-					(SELECT factura.*, COUNT(*) AS numero_detalles
-									FROM factura, detalle
-									WHERE codigo = factura
-									GROUP BY codigo) as busca
-					WHERE numero_detalles = $n";
+					FROM (atencion INNER JOIN mesa ON (atencion.mesa_rest = mesa.restaurante))
+					WHERE atencion.id_mesa = mesa.id";
 
 		$result = mysqli_query($conexion, $query);
 
 		if($result){
 			?>			
-			<h2>Facturas</h2>
+			<h2>Detalle de Atenciónes con Detalle de Mesas</h2>
 
 			<table border='1' width="29%">
 				<tr>
-					<th>Código</th>
 					<th>Fecha</th>
-					<th>Valor</th>
-					<th>Emisor</th>
-					<th>Revisor</th>
-					<th>Numero de Detalles</th>
+					<th>Hora</th>
+					<th>ID Mesa</th>
+					<th>Capacidad Mesa</th>
+					<th>Estado</th>
+					<th>Restaurante</th>
 				</tr>
 
 				<?php
 					while($row = $result->fetch_array()){
-						$codigo = $row["codigo"];
 						$fecha = $row["fecha"];
-						$valor = $row["valor"];
-						$emisor = $row["emisor"];
-						$revisor = $row["revisor"];
-						$detalles = $row["numero_detalles"];
+						$hora = $row["hora"];
+						$id = $row["id"];
+						$capacidad = $row["capacidad"];
+						$estado = $row["estado"];
+						$restaurante = $row["restaurante"];
 				?>
 				<tr>
-					<td><?php echo $codigo ?></td>
 					<td><?php echo $fecha ?></td>
-					<td><?php echo $valor ?></td>
-					<td><?php echo $emisor ?></td>
-					<td><?php echo $revisor ?></td>
-					<td><?php echo $detalles ?></td>
+					<td><?php echo $hora ?></td>
+					<td><?php echo $id ?></td>
+					<td><?php echo $capacidad ?></td>
+					<td><?php echo $estado ?></td>
+					<td><?php echo $restaurante ?></td>
 				</tr>
 				<?php
 					}
@@ -57,11 +53,7 @@
 			</table>
 			<?php
 		} else{
-			echo "No hay facturas en la base de datos.";
-			echo "<br>";
-			echo '<a href="index.php">volver a modificar factura</a>';
-			echo "<br>";
-			echo '<a href="../../index.php">volver a inicio</a>';
+			echo "No hay resultados de la busqueda.";
 		}
 	?>
 		<br>

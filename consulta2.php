@@ -8,8 +8,7 @@
 		require("conexion.php");
 
 		$query = "	SELECT R.*, M.restaurante
-			        FROM restaurante AS R
-			        INNER JOIN mesa AS M ON R.ciudad = M.restaurante 
+			        FROM restaurante AS R INNER JOIN mesa AS M ON R.ciudad = M.restaurante 
 				   	GROUP BY R.ciudad
 			        HAVING Count(*)>1 AND Count(*)<5";
 
